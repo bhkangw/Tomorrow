@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var BucketSchema = new Schema({
 	title: String,
-	desc: String,
+	description: String,
 	name: String,
 	tagged: String,
 	done: Boolean,

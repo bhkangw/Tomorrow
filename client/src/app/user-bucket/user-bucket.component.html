@@ -1,3 +1,17 @@
-<p>
-  user-bucket works!
-</p>
+<div class="container">
+  <a [routerLink]="['/dashboard']">Home</a> | <a href="/logout">Logout</a>
+  <h1>{{bucketId}}'s Bucket List </h1>
+  <hr>
+  <h2>Done:</h2>
+  <div *ngFor="let b of buckets">     
+    <div *ngIf="b.name === bucketId && b.done === true || b.tagged === bucketId && b.done === true">
+      <h4><input type="checkbox" checked disabled> {{b.name}} | {{b.title}} - {{b.description}} - {{b.createdAt | date: 'short'}}</h4>
+    </div>
+  </div>
+  <h2>Pending:</h2>
+  <div *ngFor="let b of buckets">
+    <div *ngIf="b.name === bucketId && b.done === true || b.tagged === bucketId && b.done === false">
+      <h4><input type="checkbox" disabled> {{b.name}} | {{b.title}} - {{b.description}} - {{b.createdAt | date: 'short'}}</h4>
+    </div>
+  </div>
+</div>

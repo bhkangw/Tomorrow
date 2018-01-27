@@ -2,5 +2,53 @@
   <a href="/logout" id="navbar"> Logout </a>
   <div class="jumbotron">
     <h1 *ngIf="user != 'undefined'" id="welcome">Hello, {{ user }} </h1>
+    <form (submit)="addBucket()" #form="ngForm">
+
+      <label for="title">Bucket Item</label>
+      <input type="text" name="title" required minlength="5" [(ngModel)]="bucket.title" #title="ngModel" class="form-control">
+      <div *ngIf="title.invalid && (title.dirty || title.touched)">Minimum length is 5!</div>
+
+      <label for="description">Description</label>
+      <input type="text" name="description" required minlength="10" [(ngModel)]="bucket.description" #description="ngModel" class="form-control">
+      <div *ngIf="description.invalid && (description.dirty || description.touched)">Minimum length is 10!</div>
+
+      <label for="tagged">Tag Friend!</label>
+      <select name="tagged" class="form-control" [(ngModel)]="bucket.tagged">
+        <option *ngFor="let b of buckets" value="{{b.name}}">{{b.name}}</option>
+      </select>
+      <br>
+      <button class="btn btn-success" type="submit" [disabled]="form.invalid">Add Bucket Item</button>
+    </form>
+  </div>
+  <div class="">
+    <h1>Before I die I want to..</h1>
+    <table class="table table-bordered table-striped table-hover">
+      <tr>
+        <th>Done</th>
+        <th>User</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Date Created</th>
+        <th>Action</th>
+      </tr>
+      <tr *ngFor="let b of buckets"> 
+        <!-- <td *ngIf="b.name === user || b.tagged === user"><input type="checkbox" value="trues" disabled></td> -->
+        <td *ngIf="b.name === user || b.tagged === user"><img src="{{status}}" alt=""></td>
+        <!-- <td *ngIf="b.name === user && b.done === false || b.tagged === user && b.done === false"><input type="checkbox" disabled></td> -->
+        <td *ngIf="b.name === user || b.tagged === user">{{ b.name }}</td>
+        <td *ngIf="b.name === user || b.tagged === user">{{ b.title }}</td>
+        <td *ngIf="b.name === user || b.tagged === user">{{ b.description }}</td>
+        <td *ngIf="b.name === user || b.tagged === user">{{ b.createdAt | date: 'short' }}</td>
+        <td *ngIf="b.name === user || b.tagged === user">
+          <form (submit)="changeStatus(b._id)" #form="ngForm">
+            <button class="btn-xs btn-success" type="submit">Done!</button>
+          </form>
+        </td>
+      </tr>
+    </table>
+    <h4>List of other users (click to view profile):</h4>
+    <div *ngFor="let b of buckets">
+      <p *ngIf="b.name !== user"><a [routerLink]="['/user', b.name]">{{ b.name }}</a></p>
+    </div>
   </div>
 </div>

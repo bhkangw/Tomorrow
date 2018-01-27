@@ -1,13 +1,13 @@
 export class Bucket {
 	public title: string;
-	public desc: string;
+	public description: string;
 	public name: string;
 	public tagged: string;
 	public done: boolean;
 
 	constructor() {
 		this.title = "";
-		this.desc = "";
+		this.description = "";
 		this.name = "";
 		this.tagged = "";
 		this.done = false;

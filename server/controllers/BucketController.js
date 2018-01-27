@@ -19,5 +19,33 @@ module.exports = {
   	logout: function(req,res){
 		req.session.destroy();
 		res.redirect("/");
- 	},
+	 },
+	 
+	addBucket: function (req, res) {
+		console.log("name!!", req.body.name)
+		Bucket.create({ name: req.body.name, title: req.body.title, description: req.body.description, tagged: req.body.tagged, done: false}, function (err, bucket) {
+			console.log("Created!!!!")
+			Bucket.find({}).sort("-createdAt").exec(function (err, buckets) {
+				return res.json(buckets);
+			})
+		})
+	},
+
+	changeStatus: function (req, res) {
+		console.log("id", req.body)
+		Bucket.findByIdAndUpdate(req.body.id, { $set: { done: "true" }}, function(err, bucket){
+			console.log("found!!!", bucket)
+		})
+	},
+
+	showAll: function (req, res) {
+		Bucket.find({}).sort("-createdAt").exec(function (err, buckets) {
+			return res.json(buckets);
+		})
+	},
+
+	logout: function (req, res) {
+		req.session.destroy();
+		res.redirect("/");
+	},
 }
